@@ -1,6 +1,6 @@
 # Offline Productivity App
 
-A simple offline-first productivity app that works in the browser and can be installed on mobile devices.
+A lightweight offline-first productivity app designed to help users manage tasks and notes seamlessly, even without an internet connection.
 
 ## 🚀 Live Demo
 
