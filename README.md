@@ -13,11 +13,10 @@ A lightweight offline-first productivity app that works in the browser and can b
 https://jovial-genie-3a6596.netlify.app/
 
 ## ✨ Features
-
-* Works offline (PWA enabled)
-* Runs in the browser
-* Installable on mobile
-* Simple and fast interface
+- Works fully offline (PWA support)
+- Fast and lightweight
+- Installable on mobile devices
+- Simple task and note management
 
 ## 📸 Screenshots
 
