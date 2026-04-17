@@ -4,7 +4,7 @@ A simple offline-first productivity app that works in the browser and can be ins
 
 ## 🚀 Live Demo
 
-https://your-netlify-link.netlify.app
+https://jovial-genie-3a6596.netlify.app/
 
 ## ✨ Features
 
