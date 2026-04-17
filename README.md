@@ -23,10 +23,10 @@ https://jovial-genie-3a6596.netlify.app/
 ![App Screenshot](./screenshots/app.png)
 
 ## 🛠 Tech Stack
-
-* React
-* Service Workers (PWA)
-* Netlify (deployment)
+- React
+- PWA (Service Workers)
+- Netlify (deployment)
+- Git & GitHub
 
 ## 🧠 What I Learned
 - Building React applications with state management
