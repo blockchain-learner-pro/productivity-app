@@ -1,33 +1,95 @@
-import React, { useState } from "react";
-import "./App.css";
+import { useState, useEffect } from "react";
+
+const initialTasks = {
+  Monday: [
+    { id: 1, text: "FreeCodeCamp: Blockchain basics", done: false },
+    { id: 2, text: "Write: 1 thing I learned", done: false },
+  ],
+  Tuesday: [
+    { id: 1, text: "Skool: AI + blockchain concepts", done: false },
+    { id: 2, text: "Mini practice task", done: false },
+  ],
+  Wednesday: [
+    { id: 1, text: "FreeCodeCamp: Smart contracts / Cairo", done: false },
+    { id: 2, text: "Coding exercise", done: false },
+  ],
+  Thursday: [
+    { id: 1, text: "Skool: AI dApps / metadata ideas", done: false },
+    { id: 2, text: "Build small feature idea", done: false },
+  ],
+  Friday: [
+    { id: 1, text: "GitHub: Push updates to NFT project", done: false },
+    { id: 2, text: "Commit + document progress", done: false },
+  ],
+  Weekend: [
+    { id: 1, text: "Weekly reflection", done: false },
+    { id: 2, text: "Plan next week", done: false },
+    { id: 3, text: "Rest / recovery", done: false },
+  ],
+};
+
+const STORAGE_KEY = "offline_productivity_app_v1";
 
 export default function App() {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: "Morning GitHub practice (60–90 mins)", done: false },
-    { id: 2, text: "Learn 1 new concept", done: false },
-    { id: 3, text: "Push update to project", done: false },
-    { id: 4, text: "Take a walk / reset", done: false },
-    { id: 5, text: "Write reflection", done: false },
-  ]);
+  const [tasks, setTasks] = useState(initialTasks);
+  const [loaded, setLoaded] = useState(false);
 
-  const toggleTask = (id) => {
-    setTasks(
-      tasks.map((t) =>
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) setTasks(JSON.parse(saved));
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (loaded) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+  }, [tasks, loaded]);
+
+  const toggleTask = (day, id) => {
+    setTasks((prev) => {
+      const updated = prev[day].map((t) =>
         t.id === id ? { ...t, done: !t.done } : t
-      )
-    );
+      );
+      return { ...prev, [day]: updated };
+    });
+  };
+
+  const resetApp = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setTasks(initialTasks);
   };
 
   return (
-    <div>
-      <h1>Productivity App</h1>
+    <div style={{ padding: 20, fontFamily: "Arial" }}>
+      <h1>📅 Offline Productivity App</h1>
 
-      {tasks.map((task) => (
-        <div key={task.id} onClick={() => toggleTask(task.id)}>
-          <input type="checkbox" checked={task.done} readOnly />
-          {task.text}
+      <button onClick={resetApp} style={{ marginBottom: 20 }}>
+        Reset Week
+      </button>
+
+      {Object.entries(tasks).map(([day, dayTasks]) => (
+        <div key={day} style={{ marginBottom: 20 }}>
+          <h2>{day}</h2>
+
+          {dayTasks.map((task) => (
+            <label key={task.id} style={{ display: "block" }}>
+              <input
+                type="checkbox"
+                checked={task.done}
+                onChange={() => toggleTask(day, task.id)}
+              />
+              <span style={{ marginLeft: 8 }}>
+                {task.done ? "✔ " : ""}{task.text}
+              </span>
+            </label>
+          ))}
         </div>
       ))}
+
+      <p style={{ fontSize: 12, marginTop: 20 }}>
+        Works offline • Saves automatically • No login required
+      </p>
     </div>
   );
 }
